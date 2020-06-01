@@ -2,7 +2,7 @@ import 'package:freeschool_mobile/category/category.dart';
 import 'package:freeschool_mobile/content/content.dart';
 import 'package:freeschool_mobile/course/course.dart';
 import 'package:freeschool_mobile/lesson/lesson.dart';
-import 'package:freeschool_mobile/topics/topic.dart';
+import 'package:freeschool_mobile/module/module.dart';
 
 var categories = [
   Category(id: 1, name: "Math"),
@@ -26,13 +26,13 @@ var courses = [
   Course(id: 10, name: "Class 10", categoryID: 1),
 ];
 
-var topics = [
-  Topic(name: "Integers", lessons: [
+var modules = [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Fractions and decimals", lessons: [
+  Module(name: "Fractions and decimals", lessons: [
     Lesson(name: "Fractions"),
     Lesson(name: "Multiplying fractions"),
     Lesson(name: "Dividing fractions"),
@@ -41,67 +41,67 @@ var topics = [
     Lesson(name: "Dividing decimals"),
     Lesson(name: "Decimals word problems"),
   ]),
-  Topic(name: "Data Handling", lessons: [
+  Module(name: "Data Handling", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")
   ]),
-  Topic(name: "Integers", lessons: [
+  Module(name: "Integers", lessons: [
     Lesson(name: "Addition and subtraction of integers"),
     Lesson(name: "Multiplication of integers"),
     Lesson(name: "Integers word problems")

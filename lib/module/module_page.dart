@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/lesson/lessons_page.dart';
-import 'package:freeschool_mobile/topics/topic.dart';
 import 'package:get/get.dart';
 
 import '../data.dart';
+import 'module.dart';
 
-class TopicsPage extends StatelessWidget {
+class ModulesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Class 1'),
       ),
-      body: TopicsList(),
+      body: ModulesList(),
     );
   }
 }
 
-class TopicsList extends StatelessWidget {
+class ModulesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: EdgeInsets.symmetric(vertical: 8),
-      itemCount: topics.length,
-      itemBuilder: (_, index) => TopicsListTile(
-        topic: topics[index],
+      itemCount: modules.length,
+      itemBuilder: (_, index) => ModulesListTile(
+        module: modules[index],
       ),
       separatorBuilder: (_, __) => Divider(),
     );
   }
 }
 
-class TopicsListTile extends StatelessWidget {
-  final Topic topic;
+class ModulesListTile extends StatelessWidget {
+  final Module module;
 
-  TopicsListTile({@required this.topic});
+  ModulesListTile({@required this.module});
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +45,14 @@ class TopicsListTile extends StatelessWidget {
           leading: Icon(Icons.dashboard),
           trailing: Icon(Icons.chevron_right),
           title: Text(
-            topic.name,
+            module.name,
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
           onTap: () {
             Get.to(LessonsPage());
           },
         ),
-        ...topic.lessons.map((e) => Padding(
+        ...module.lessons.map((e) => Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
               child: Text(e.name),

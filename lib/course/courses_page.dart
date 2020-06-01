@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/course/course.dart';
-import 'package:freeschool_mobile/topics/topics_page.dart';
+import 'package:freeschool_mobile/module/module_page.dart';
 import 'package:freeschool_mobile/widgets/custom_divider.dart';
 import 'package:get/get.dart';
 
@@ -52,7 +52,7 @@ class CourseListTile extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.w600),
       ),
       onTap: () {
-        Get.to(TopicsPage());
+        Get.to(ModulesPage());
       },
     );
   }
