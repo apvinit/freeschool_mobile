@@ -75,7 +75,7 @@ class CourseListTile extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.w600),
       ),
       onTap: () {
-        Get.to(ModulesPage(courseID: course.id));
+        Get.to(ModulesPage(courseID: course.id, courseTitle: course.title,));
       },
     );
   }
