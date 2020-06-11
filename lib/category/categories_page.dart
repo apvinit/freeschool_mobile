@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/category/category.dart';
 import 'package:freeschool_mobile/course/courses_page.dart';
-import 'package:freeschool_mobile/data.dart';
+import 'package:freeschool_mobile/services/remote.dart';
 import 'package:freeschool_mobile/widgets/custom_divider.dart';
 import 'package:get/get.dart';
 
@@ -19,12 +19,24 @@ class CategoryPage extends StatelessWidget {
 class CourseCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: categories.length,
-      itemBuilder: (_, index) => CourseCategoryTile(
-        category: categories[index],
-      ),
-      separatorBuilder: (_, __) => CustomDivider()
+    return FutureBuilder<List<Category>>(
+      future: getCategories(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var categories = snapshot.data;
+          return ListView.separated(
+              itemCount: categories.length,
+              itemBuilder: (_, index) => CourseCategoryTile(
+                    category: categories[index],
+                  ),
+              separatorBuilder: (_, __) => CustomDivider());
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text("error occured"),
+          );
+        }
+        return CircularProgressIndicator();
+      },
     );
   }
 }
@@ -44,11 +56,11 @@ class CourseCategoryTile extends StatelessWidget {
         child: Icon(Icons.multiline_chart),
       ),
       title: Text(
-        category.name,
+        category.title,
         style: TextStyle(fontWeight: FontWeight.w600),
       ),
       onTap: () {
-        Get.to(CoursesPage());
+        Get.to(CoursesPage(categoryID: category.id,));
       },
     );
   }
