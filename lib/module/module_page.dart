@@ -1,32 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/lesson/lessons_page.dart';
+import 'package:freeschool_mobile/services/remote.dart';
 import 'package:get/get.dart';
 
-import '../data.dart';
 import 'module.dart';
 
 class ModulesPage extends StatelessWidget {
+  final int courseID;
+  final String courseTitle;
+
+  ModulesPage({@required this.courseID, @required this.courseTitle});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Class 1'),
+        title: Text(courseTitle),
       ),
-      body: ModulesList(),
+      body: ModulesList(courseID: courseID),
     );
   }
 }
 
 class ModulesList extends StatelessWidget {
+  final int courseID;
+
+  ModulesList({@required this.courseID});
+
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      itemCount: modules.length,
-      itemBuilder: (_, index) => ModulesListTile(
-        module: modules[index],
-      ),
-      separatorBuilder: (_, __) => Divider(),
+    return FutureBuilder<List<Module>>(
+      future: getCourseModules(courseID),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var modules = snapshot.data;
+          return ListView.separated(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            itemCount: modules.length,
+            itemBuilder: (_, index) => ModulesListTile(
+              module: modules[index],
+            ),
+            separatorBuilder: (_, __) => Divider(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text("some error occured"),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
@@ -45,18 +69,21 @@ class ModulesListTile extends StatelessWidget {
           leading: Icon(Icons.dashboard),
           trailing: Icon(Icons.chevron_right),
           title: Text(
-            module.name,
+            module.title,
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
           onTap: () {
-            Get.to(LessonsPage());
+            Get.to(LessonsPage(
+              moduleID: module.id,
+              moduleTitle: module.title,
+            ));
           },
         ),
-        ...module.lessons.map((e) => Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-              child: Text(e.name),
-            ))
+        // ...module.lessons.map((e) => Padding(
+        //       padding:
+        //           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+        //       child: Text(e.name),
+        //     ))
       ],
     );
   }
