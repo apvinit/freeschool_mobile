@@ -1,33 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/course/course.dart';
 import 'package:freeschool_mobile/module/module_page.dart';
+import 'package:freeschool_mobile/services/remote.dart';
 import 'package:freeschool_mobile/widgets/custom_divider.dart';
 import 'package:get/get.dart';
 
-import '../data.dart';
-
 class CoursesPage extends StatelessWidget {
+  final int categoryID;
+
+  CoursesPage({@required this.categoryID});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Math'),
+        title: Text('Courses'),
       ),
-      body: CourseList(),
+      body: CourseList(
+        categoryID: categoryID,
+      ),
     );
   }
 }
 
 class CourseList extends StatelessWidget {
+  final int categoryID;
+
+  CourseList({@required this.categoryID});
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      itemCount: courses.length,
-      itemBuilder: (_, index) => CourseListTile(
-        course: courses[index],
-      ),
-      separatorBuilder: (_, __) => CustomDivider(),
+    return FutureBuilder<List<Course>>(
+      future: getCatergoryCourses(categoryID),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var courses = snapshot.data;
+          return ListView.separated(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            itemCount: courses.length,
+            itemBuilder: (_, index) => CourseListTile(
+              course: courses[index],
+            ),
+            separatorBuilder: (_, __) => CustomDivider(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('some error occured'),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
@@ -48,11 +71,11 @@ class CourseListTile extends StatelessWidget {
         child: Icon(Icons.multiline_chart),
       ),
       title: Text(
-        course.name,
+        course.title,
         style: TextStyle(fontWeight: FontWeight.w600),
       ),
       onTap: () {
-        Get.to(ModulesPage());
+        Get.to(ModulesPage(courseID: course.id));
       },
     );
   }
