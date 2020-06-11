@@ -1,6 +1,6 @@
 class Content {
   int id;
-  String name;
+  String title;
   String description;
   int lessonID;
   ContentType type;
@@ -8,12 +8,20 @@ class Content {
 
   Content({
     this.id,
-    this.name,
+    this.title,
     this.description,
     this.lessonID,
     this.type,
     this.data,
   });
+
+  factory Content.fromMap(Map<String, dynamic> map) {
+    return Content(
+      id: map['id'],
+      title: map['title'],
+      data: map['data'],
+    );
+  }
 }
 
 enum ContentType { Video, Text }

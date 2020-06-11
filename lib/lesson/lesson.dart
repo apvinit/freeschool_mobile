@@ -2,14 +2,21 @@ import 'package:freeschool_mobile/content/content.dart';
 
 class Lesson {
   int id;
-  String name;
+  String title;
   List<Content> contents;
   int courseID;
 
   Lesson({
     this.id,
-    this.name,
+    this.title,
     this.contents,
     this.courseID,
   });
+
+  factory Lesson.fromMap(Map<String,dynamic> map) {
+    return Lesson(
+      id: map['id'],
+      title: map['title']
+    );
+  } 
 }
