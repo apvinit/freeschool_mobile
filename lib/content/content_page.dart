@@ -1,74 +1,62 @@
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:freeschool_mobile/content/content.dart';
+import 'package:freeschool_mobile/services/remote.dart';
 import 'package:video_player/video_player.dart';
 
 class ContentPage extends StatefulWidget {
+  final Content content;
+
+  ContentPage({@required this.content, Key key}) : super(key: key);
+
   @override
   _ContentPageState createState() => _ContentPageState();
 }
 
 class _ContentPageState extends State<ContentPage> {
-  static const url =
-      "https://archive.org/download/WildlifeSampleVideo/Wildlife.mp4";
-
-  VideoPlayerController _controller;
+  FlickManager _flickManager;
 
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
-    _controller = VideoPlayerController.network(url)
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
+    _flickManager = FlickManager(
+      autoPlay: false,
+      videoPlayerController: VideoPlayerController.network(
+        getStreamUrl(widget.content.data),
+      ),
+    );
+
   }
 
   @override
   void dispose() {
-    SystemChrome.restoreSystemUIOverlays();
-    _controller.dispose();
+    _flickManager.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Stack(
-                children: [
-                  VideoPlayer(_controller),
-                  Center(
-                    child: IconButton(
-                      icon: Icon(
-                        _controller.value.isPlaying
-                            ? Icons.pause
-                            : Icons.play_arrow,
-                        color: Colors.white,
-                        size: 48,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                        });
-                      },
-                    ),
-                  )
-                ],
+            FlickVideoPlayer(
+              flickManager: _flickManager,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                widget.content.title,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
               ),
             ),
-            Expanded(
-              child: Container(
-                color: Colors.grey[100],
-              ),
-            )
+            if (widget.content.description != null)
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(widget.content.description),
+            ),
+            Divider()
           ],
         ),
       ),

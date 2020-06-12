@@ -1,7 +1,7 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/content/content.dart';
-import 'package:freeschool_mobile/content/full_screen_video_player.dart';
+import 'package:freeschool_mobile/content/content_page.dart';
 import 'package:freeschool_mobile/lesson/lesson.dart';
 import 'package:freeschool_mobile/services/ads.dart';
 import 'package:freeschool_mobile/services/remote.dart';
@@ -103,7 +103,7 @@ class LessonsListTile extends StatelessWidget {
                           leading: Icon(Icons.play_arrow),
                           title: Text(c.title),
                           onTap: () {
-                            Get.to(FullScreenVideoPlayer(data: c.data));
+                            Get.to(ContentPage(content: c));
                           },
                         ),
                       )

@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   get: ^2.7.1
   video_player: '>=0.10.11+1 <2.0.0'
+  flick_video_player: ^0.1.1
+  provider: any
   http: ^0.12.1
   admob_flutter: "^0.3.4"
 
