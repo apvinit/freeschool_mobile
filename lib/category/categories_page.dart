@@ -1,6 +1,8 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/category/category.dart';
 import 'package:freeschool_mobile/course/courses_page.dart';
+import 'package:freeschool_mobile/services/ads.dart';
 import 'package:freeschool_mobile/services/remote.dart';
 import 'package:freeschool_mobile/widgets/custom_divider.dart';
 import 'package:get/get.dart';
@@ -26,9 +28,32 @@ class CourseCategoryList extends StatelessWidget {
           var categories = snapshot.data;
           return ListView.separated(
               itemCount: categories.length,
-              itemBuilder: (_, index) => CourseCategoryTile(
-                    category: categories[index],
-                  ),
+              itemBuilder: (_, index) {
+                if (index != 0 && index % 3 == 0) {
+                  return Column(
+                    children: [
+                      SizedBox(height: 8),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Center(child: Text('Ad')),
+                          AdmobBanner(
+                            adSize: AdmobBannerSize.LARGE_BANNER,
+                            adUnitId: getCategoryPageBannerId(),
+                          ),
+                        ],
+                      ),
+                      Divider(indent: 16),
+                      CourseCategoryTile(
+                        category: categories[index],
+                      )
+                    ],
+                  );
+                }
+                return CourseCategoryTile(
+                  category: categories[index],
+                );
+              },
               separatorBuilder: (_, __) => CustomDivider());
         } else if (snapshot.hasError) {
           return Center(
@@ -60,7 +85,9 @@ class CourseCategoryTile extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.w600),
       ),
       onTap: () {
-        Get.to(CoursesPage(categoryID: category.id,));
+        Get.to(CoursesPage(
+          categoryID: category.id,
+        ));
       },
     );
   }

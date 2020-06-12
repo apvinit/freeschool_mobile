@@ -1,5 +1,7 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/lesson/lessons_page.dart';
+import 'package:freeschool_mobile/services/ads.dart';
 import 'package:freeschool_mobile/services/remote.dart';
 import 'package:get/get.dart';
 
@@ -37,9 +39,32 @@ class ModulesList extends StatelessWidget {
           return ListView.separated(
             padding: EdgeInsets.symmetric(vertical: 8),
             itemCount: modules.length,
-            itemBuilder: (_, index) => ModulesListTile(
-              module: modules[index],
-            ),
+            itemBuilder: (_, index) {
+              if (index != 0 && index % 2 == 0) {
+                return Column(
+                  children: [
+                    SizedBox(height: 8),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Center(child: Text('Ad')),
+                        AdmobBanner(
+                          adSize: AdmobBannerSize.LARGE_BANNER,
+                          adUnitId: getModulePageBannerId(),
+                        ),
+                      ],
+                    ),
+                    Divider(indent: 16),
+                    ModulesListTile(
+                      module: modules[index],
+                    )
+                  ],
+                );
+              }
+              return ModulesListTile(
+                module: modules[index],
+              );
+            },
             separatorBuilder: (_, __) => Divider(),
           );
         } else if (snapshot.hasError) {

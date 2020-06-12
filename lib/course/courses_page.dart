@@ -1,6 +1,8 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/course/course.dart';
 import 'package:freeschool_mobile/module/module_page.dart';
+import 'package:freeschool_mobile/services/ads.dart';
 import 'package:freeschool_mobile/services/remote.dart';
 import 'package:freeschool_mobile/widgets/custom_divider.dart';
 import 'package:get/get.dart';
@@ -37,9 +39,33 @@ class CourseList extends StatelessWidget {
           return ListView.separated(
             padding: EdgeInsets.symmetric(vertical: 8),
             itemCount: courses.length,
-            itemBuilder: (_, index) => CourseListTile(
-              course: courses[index],
-            ),
+            itemBuilder: (_, index) {
+              if (index != 0 && index % 3 == 0) {
+                return Column(
+                  children: [
+                    SizedBox(height: 8),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Center(child: Text('Ad')),
+                        AdmobBanner(
+                          adSize: AdmobBannerSize.LARGE_BANNER,
+                          adUnitId: getCoursePageBannerId(),
+                        ),
+                      ],
+                    ),
+                    Divider(indent: 16),
+                    CourseListTile(
+                      course: courses[index],
+                    )
+                  ],
+                );
+              }
+
+              return CourseListTile(
+                course: courses[index],
+              );
+            },
             separatorBuilder: (_, __) => CustomDivider(),
           );
         } else if (snapshot.hasError) {
@@ -75,7 +101,10 @@ class CourseListTile extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.w600),
       ),
       onTap: () {
-        Get.to(ModulesPage(courseID: course.id, courseTitle: course.title,));
+        Get.to(ModulesPage(
+          courseID: course.id,
+          courseTitle: course.title,
+        ));
       },
     );
   }

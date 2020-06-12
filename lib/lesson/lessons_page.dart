@@ -1,7 +1,9 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/content/content.dart';
 import 'package:freeschool_mobile/content/full_screen_video_player.dart';
 import 'package:freeschool_mobile/lesson/lesson.dart';
+import 'package:freeschool_mobile/services/ads.dart';
 import 'package:freeschool_mobile/services/remote.dart';
 import 'package:get/get.dart';
 
@@ -37,9 +39,26 @@ class LessonsList extends StatelessWidget {
           return ListView.separated(
             padding: EdgeInsets.symmetric(vertical: 8),
             itemCount: lessons.length,
-            itemBuilder: (_, index) => LessonsListTile(
-              lesson: lessons[index],
-            ),
+            itemBuilder: (_, index) {
+              return Column(
+                children: [
+                  LessonsListTile(
+                    lesson: lessons[index],
+                  ),
+                  Divider(),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Center(child: Text('Ad')),
+                      AdmobBanner(
+                        adSize: AdmobBannerSize.LARGE_BANNER,
+                        adUnitId: getLessonPageBannerId(),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
             separatorBuilder: (_, __) => Divider(),
           );
         } else if (snapshot.hasError) {
@@ -71,35 +90,35 @@ class LessonsListTile extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
-        SizedBox(
-          height: 200,
-          child: FutureBuilder<List<Content>>(
-            future: getLessonContents(lesson.id),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var contents = snapshot.data;
-                return ListView.builder(
-                    itemCount: contents.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: Icon(Icons.play_arrow),
-                        title: Text(contents[index].title),
-                        onTap: () {
-                          Get.to(FullScreenVideoPlayer(
-                              data: contents[index].data));
-                        },
-                      );
-                    });
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('some error'),
-                );
-              }
-              return Center(
-                child: CircularProgressIndicator(),
+        FutureBuilder<List<Content>>(
+          future: getLessonContents(lesson.id),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var contents = snapshot.data;
+              return Column(
+                children: [
+                  ...contents
+                      .map(
+                        (c) => ListTile(
+                          leading: Icon(Icons.play_arrow),
+                          title: Text(c.title),
+                          onTap: () {
+                            Get.to(FullScreenVideoPlayer(data: c.data));
+                          },
+                        ),
+                      )
+                      .toList()
+                ],
               );
-            },
-          ),
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('some error'),
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
         // ...lesson.contents.map(
         //   (e) => ListTile(
