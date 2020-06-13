@@ -1,6 +1,8 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:freeschool_mobile/content/content.dart';
+import 'package:freeschool_mobile/services/ads.dart';
 import 'package:freeschool_mobile/services/remote.dart';
 import 'package:video_player/video_player.dart';
 
@@ -25,7 +27,6 @@ class _ContentPageState extends State<ContentPage> {
         getStreamUrl(widget.content.data),
       ),
     );
-
   }
 
   @override
@@ -37,28 +38,38 @@ class _ContentPageState extends State<ContentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FlickVideoPlayer(
-              flickManager: _flickManager,
+      appBar: AppBar(title: Text(widget.content.title),),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FlickVideoPlayer(
+            flickManager: _flickManager,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.content.title,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.content.title,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-              ),
-            ),
-            if (widget.content.description != null)
+          ),
+          if (widget.content.description != null)
             Padding(
               padding: const EdgeInsets.all(8),
               child: Text(widget.content.description),
             ),
-            Divider()
-          ],
-        ),
+          Divider(),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Center(child: Text('Ad')),
+              AdmobBanner(
+                adSize: AdmobBannerSize.LARGE_BANNER,
+                adUnitId: getContentPageBannerId(),
+              ),
+            ],
+          ),
+          Divider()
+        ],
       ),
     );
   }

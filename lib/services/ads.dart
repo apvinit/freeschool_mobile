@@ -27,3 +27,10 @@ String getLessonPageBannerId() {
   }
   return "ca-app-pub-3940256099942544/6300978111";
 }
+
+String getContentPageBannerId() {
+  if (kReleaseMode) {
+    return "ca-app-pub-2582751373548446/2575485542";
+  }
+  return "ca-app-pub-3940256099942544/6300978111";
+}
