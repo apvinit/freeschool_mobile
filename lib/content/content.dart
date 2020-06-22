@@ -3,8 +3,9 @@ class Content {
   String title;
   String description;
   int lessonID;
-  ContentType type;
+  String type;
   String data;
+  bool draft;
 
   Content({
     this.id,
@@ -13,15 +14,17 @@ class Content {
     this.lessonID,
     this.type,
     this.data,
+    this.draft,
   });
 
   factory Content.fromMap(Map<String, dynamic> map) {
     return Content(
       id: map['id'],
       title: map['title'],
+      description: map['description'],
+      type: map['content_type'],
       data: map['data'],
+      draft: map['draft'],
     );
   }
 }
-
-enum ContentType { Video, Text }

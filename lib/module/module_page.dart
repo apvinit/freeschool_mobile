@@ -17,7 +17,7 @@ class ModulesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(courseTitle),
+        title: Text("$courseTitle Modules"),
       ),
       body: ModulesList(courseID: courseID),
     );
