@@ -73,9 +73,7 @@ class CourseList extends StatelessWidget {
             child: Text('some error occured'),
           );
         }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -94,7 +92,7 @@ class CourseListTile extends StatelessWidget {
       leading: CircleAvatar(
         radius: 24,
         backgroundColor: Colors.grey[100],
-        child: Icon(Icons.multiline_chart),
+        backgroundImage: NetworkImage(getMediaUrl(course.cover)),
       ),
       title: Text(
         course.title,
