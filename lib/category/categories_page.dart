@@ -60,7 +60,7 @@ class CourseCategoryList extends StatelessWidget {
             child: Text("error occured"),
           );
         }
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -78,7 +78,7 @@ class CourseCategoryTile extends StatelessWidget {
       leading: CircleAvatar(
         radius: 24,
         backgroundColor: Colors.grey[100],
-        child: Icon(Icons.multiline_chart),
+        backgroundImage: NetworkImage(getMediaUrl(category.cover)),
       ),
       title: Text(
         category.title,

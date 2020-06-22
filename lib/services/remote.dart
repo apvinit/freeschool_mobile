@@ -8,16 +8,13 @@ import 'package:freeschool_mobile/lesson/lesson.dart';
 import 'package:freeschool_mobile/module/module.dart';
 import 'package:http/http.dart' as http;
 
-String get baseURL{
-
+String get baseURL {
   if (core.kReleaseMode) {
     return "https://api.freeschool.org.in";
   }
 
   return "http://192.168.43.7:8888";
 }
-
-
 
 List<Category> parseCategories(String responseBody) {
   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
@@ -93,4 +90,8 @@ Future<List<Content>> getLessonContents(int id) async {
 
 String getStreamUrl(String data) {
   return "$baseURL/api/contents/stream/$data/index.m3u8";
+}
+
+String getMediaUrl(String name) {
+  return "$baseURL/api/uploads/$name";
 }
