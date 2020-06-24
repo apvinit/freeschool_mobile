@@ -39,7 +39,7 @@ class CourseList extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 8),
             itemCount: courses.length,
             itemBuilder: (_, index) {
-              if (index != 0 && index % 3 == 0) {
+              if (index != 0 && index % 2 == 0) {
                 return Column(
                   children: [
                     SizedBox(height: 8),
