@@ -15,6 +15,7 @@ class Module {
       title: map['title'],
       description: map['description'],
       draft: map['draft'],
+      lessons: (map['lessons'] as List)?.map((e) => Lesson.fromMap(e))?.toList() ?? []
     );
   }
 }

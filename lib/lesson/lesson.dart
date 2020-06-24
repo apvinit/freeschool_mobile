@@ -23,6 +23,7 @@ class Lesson {
       title: map['title'],
       description: map['description'],
       draft: map['draft'],
+      contents: (map['contents'] as List)?.map((e) => Content.fromMap(e))?.toList() ?? []
     );
   }
 }

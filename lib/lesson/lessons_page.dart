@@ -1,6 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:freeschool_mobile/content/content.dart';
 import 'package:freeschool_mobile/content/content_page.dart';
 import 'package:freeschool_mobile/lesson/lesson.dart';
 import 'package:freeschool_mobile/services/ads.dart';
@@ -90,45 +89,15 @@ class LessonsListTile extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
-        FutureBuilder<List<Content>>(
-          future: getLessonContents(lesson.id),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var contents = snapshot.data;
-              return Column(
-                children: [
-                  ...contents
-                      .map(
-                        (c) => ListTile(
-                          leading: Icon(Icons.play_arrow),
-                          title: Text(c.title),
-                          onTap: () {
-                            Get.to(ContentPage(content: c));
-                          },
-                        ),
-                      )
-                      .toList()
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('some error'),
-              );
-            }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
-        // ...lesson.contents.map(
-        //   (e) => ListTile(
-        //     leading: Icon(Icons.play_arrow),
-        //     title: Text(e.name),
-        //     onTap: () {
-        //       Get.to(FullScreenVideoPlayer());
-        //     },
-        //   ),
-        // )
+        ...lesson.contents.map(
+          (c) => ListTile(
+            leading: Icon(Icons.play_arrow),
+            title: Text(c.title),
+            onTap: () {
+              Get.to(ContentPage(content: c,));
+            },
+          ),
+        )
       ],
     );
   }

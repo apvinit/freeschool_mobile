@@ -104,11 +104,11 @@ class ModulesListTile extends StatelessWidget {
             ));
           },
         ),
-        // ...module.lessons.map((e) => Padding(
-        //       padding:
-        //           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-        //       child: Text(e.name),
-        //     ))
+        ...module.lessons.map((l) => Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+              child: Text(l.title),
+            ))
       ],
     );
   }
