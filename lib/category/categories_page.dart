@@ -7,52 +7,40 @@ import 'package:get/get.dart';
 class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: CourseCategoryList()));
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Subjects'),
+        ),
+        body: CourseCategoryList());
   }
 }
 
 class CourseCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.all(16),
-          child: Text(
-            'Subjects',
-            style: Theme.of(context).textTheme.headline2.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
-          ),
-        ),
-        Expanded(
-          child: FutureBuilder<List<Category>>(
-            future: getCategories(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var categories = snapshot.data;
-                return GridView.builder(
-                  padding: EdgeInsets.all(8.0),
-                  itemCount: categories.length,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200, childAspectRatio: 0.95),
-                  itemBuilder: (_, index) {
-                    return CourseCategoryTile(
-                      category: categories[index],
-                    );
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text("error occured"),
-                );
-              }
-              return Center(child: CircularProgressIndicator());
+    return FutureBuilder<List<Category>>(
+      future: getCategories(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var categories = snapshot.data;
+          return GridView.builder(
+            padding: EdgeInsets.all(8.0),
+            itemCount: categories.length,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200, childAspectRatio: 0.95),
+            itemBuilder: (_, index) {
+              return CourseCategoryTile(
+                category: categories[index],
+              );
             },
-          ),
-        ),
-      ],
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text("error occured"),
+          );
+        }
+        return Center(child: CircularProgressIndicator());
+      },
     );
   }
 }

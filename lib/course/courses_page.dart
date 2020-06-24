@@ -4,7 +4,6 @@ import 'package:freeschool_mobile/course/course.dart';
 import 'package:freeschool_mobile/module/module_page.dart';
 import 'package:freeschool_mobile/services/ads.dart';
 import 'package:freeschool_mobile/services/remote.dart';
-import 'package:freeschool_mobile/widgets/custom_divider.dart';
 import 'package:get/get.dart';
 
 class CoursesPage extends StatelessWidget {
@@ -36,7 +35,7 @@ class CourseList extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var courses = snapshot.data;
-          return ListView.separated(
+          return ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 8),
             itemCount: courses.length,
             itemBuilder: (_, index) {
@@ -66,7 +65,6 @@ class CourseList extends StatelessWidget {
                 course: courses[index],
               );
             },
-            separatorBuilder: (_, __) => CustomDivider(),
           );
         } else if (snapshot.hasError) {
           return Center(
@@ -87,23 +85,37 @@ class CourseListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.all(8),
-      leading: CircleAvatar(
-        radius: 24,
-        backgroundColor: Colors.grey[100],
-        backgroundImage: NetworkImage(getMediaUrl(course.cover)),
+    return Card(
+      child: InkWell(
+        onTap: () {
+          Get.to(ModulesPage(
+            courseID: course.id,
+            courseTitle: course.title,
+          ));
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                getMediaUrl(course.cover),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                course.title,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(fontWeight: FontWeight.w700),
+              ),
+            )
+          ],
+        ),
       ),
-      title: Text(
-        course.title,
-        style: TextStyle(fontWeight: FontWeight.w600),
-      ),
-      onTap: () {
-        Get.to(ModulesPage(
-          courseID: course.id,
-          courseTitle: course.title,
-        ));
-      },
     );
   }
 }
