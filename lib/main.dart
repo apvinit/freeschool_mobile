@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blue[900],
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'Martel Sans'
       ),
       home: CategoryPage(),
     );
